@@ -1,62 +1,56 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>WealthX RMF Service</title>
-    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background: #c9e6f3; font-family: 'Noto Sans Thai', sans-serif; height: 100vh; width: 100vw; overflow: hidden; }
-        .chat-body { background: #c9e6f3; padding: 20px 14px; height: 100vh; width: 100%; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; padding-bottom: 50px; }
-        .bw { display: flex; align-items: flex-start; gap: 8px; }
-        .av { width: 32px; height: 32px; background: #06C755; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold; flex-shrink: 0; }
-        .bubble { background: white; border-radius: 18px 18px 18px 4px; padding: 12px 16px; font-size: 14px; max-width: 80%; line-height: 1.6; color: #222; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-        .bw.user { flex-direction: row-reverse; }
-        .bubble.user { background: #06C755; color: white; border-radius: 18px 18px 4px 18px; }
-        .q-card { background: #1a3a6b; border-radius: 18px 18px 18px 4px; overflow: hidden; max-width: 90%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .q-body { padding: 16px 16px 12px; color: white; font-size: 14px; font-weight: 600; }
-        .q-btns { display: flex; gap: 10px; padding: 0 16px 16px; }
-        .q-btn { flex: 1; padding: 10px 8px; border-radius: 25px; font-size: 13px; font-weight: bold; cursor: pointer; border: none; }
-        .q-btn.primary { background: #06C755; color: white; }
-        .q-btn.secondary { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); }
-        .typing { display: flex; align-items: center; gap: 5px; background: white; border-radius: 15px; padding: 12px 16px; width: fit-content; }
-        .typing span { width: 8px; height: 8px; background: #bbb; border-radius: 50%; animation: bounce 1.2s infinite; }
-        @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-7px)} }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>WealthX RMF Service</title>
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    /* CSS เหมือนเดิมทุกอย่างครับ (ตัดกรอบมือถือออกแล้ว) */
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { background: #c9e6f3; font-family: 'Noto Sans Thai', sans-serif; height: 100vh; width: 100vw; overflow: hidden; }
+    .chat-body { background: #c9e6f3; padding: 20px 14px; height: 100vh; width: 100%; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; padding-bottom: 50px; }
+    .bw { display: flex; align-items: flex-start; gap: 8px; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    .bw.user { flex-direction: row-reverse; }
+    .av { width: 32px; height: 32px; background: #06C755; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold; flex-shrink: 0; }
+    .bubble { background: white; border-radius: 18px 18px 18px 4px; padding: 12px 16px; font-size: 14px; max-width: 80%; line-height: 1.6; color: #222; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+    .bubble.user { background: #06C755; color: white; border-radius: 18px 18px 4px 18px; }
+    .q-card { background: #1a3a6b; border-radius: 18px 18px 18px 4px; overflow: hidden; max-width: 90%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .q-body { padding: 16px 16px 12px; color: white; font-size: 14px; font-weight: 600; line-height: 1.5; }
+    .q-btns { display: flex; gap: 10px; padding: 0 16px 16px; }
+    .q-btn { flex: 1; padding: 10px 8px; border-radius: 25px; font-size: 13px; font-weight: bold; cursor: pointer; border: none; }
+    .q-btn.primary { background: #06C755; color: white; }
+    .q-btn.secondary { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); }
+    .typing { display: flex; align-items: center; gap: 5px; background: white; border-radius: 15px; padding: 12px 16px; width: fit-content; }
+    .typing span { width: 8px; height: 8px; background: #bbb; border-radius: 50%; animation: bounce 1.2s infinite; }
+    @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-7px)} }
+</style>
 </head>
 <body>
 
-<div class="chat-body" id="chatBody">
-    <div class="bw"><div class="av">W</div><div class="bubble">กำลังเชื่อมต่อระบบ...</div></div>
-</div>
+<div class="chat-body" id="chatBody"></div>
 
 <script>
-// --- ส่วนตั้งค่า ---
-const LIFF_ID = "2009740963-bdYhkB68"; 
-
 const chat = document.getElementById('chatBody');
+const LIFF_ID = "2009740963-bdYhkB68"; // LIFF ID ของคุณ
 
+// 2. เริ่มต้นระบบ LIFF
 async function initLiff() {
     try {
-        // ลองเชื่อมต่อ LINE
         await liff.init({ liffId: LIFF_ID });
-        
         if (!liff.isLoggedIn()) {
             liff.login();
         } else {
-            chat.innerHTML = ''; // ล้างคำว่ากำลังเชื่อมต่อออก
             startFlow();
         }
     } catch (err) {
-        // ถ้าพัง มันจะเด้งบอกว่าพังเพราะอะไร
-        alert("LIFF Error: " + err.message);
-        console.error(err);
+        console.error('LIFF Init Error', err);
     }
 }
 
-function scroll() { chat.scrollTop = chat.scrollHeight; }
+function scroll() { setTimeout(() => { chat.scrollTop = chat.scrollHeight; }, 100); }
 function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 function typing() {
@@ -66,24 +60,25 @@ function typing() {
     chat.appendChild(el); scroll(); return el;
 }
 
-function addW(html) { 
-    chat.insertAdjacentHTML('beforeend', `<div class="bw"><div class="av">W</div><div class="bubble">${html}</div></div>`); 
-    scroll(); 
-}
-
-function addUser(text) { 
-    chat.insertAdjacentHTML('beforeend', `<div class="bw user"><div class="bubble user">${text}</div></div>`); 
-    scroll(); 
-}
-
-async function finishAndSend(summary) {
+// 3. ฟังก์ชันสำคัญ: สั่งยิงข้อความลงแชทจริง
+async function finishAndSend(summaryText) {
     const t = typing(); await wait(1000); t.remove();
-    addW("รับทราบครับ กำลังส่งข้อมูลเข้าแชท...");
+    addW("กำลังบันทึกข้อมูลและส่งเข้าแชทให้เจ้าหน้าที่ครับ...");
+    await wait(1500);
+
     try {
-        await liff.sendMessages([{ "type": "text", "text": "🎯 สนใจย้าย RMF\n" + summary }]);
+        // ส่งข้อความลงแชท
+        await liff.sendMessages([
+            {
+                "type": "text",
+                "text": "🎯 สนใจย้าย RMF มาที่ WealthX\n" + summaryText
+            }
+        ]);
+        // ส่งเสร็จแล้วปิดหน้าจอ LIFF ทันที
         liff.closeWindow();
     } catch (error) {
-        alert("ส่งเข้าแชทไม่ได้: " + error.message);
+        alert("กรุณายอมรับสิทธิ์การส่งข้อความ (Scopes) ใน LINE ก่อนนะครับ");
+        console.error(error);
     }
 }
 
@@ -93,29 +88,33 @@ function qCard(body, btn1, btn2, onYes, onNo) {
     el.className = 'bw';
     el.innerHTML = `<div class="av">W</div><div class="q-card"><div class="q-body">${body}</div><div class="q-btns"><button class="q-btn primary" id="${id}y">${btn1}</button><button class="q-btn secondary" id="${id}n">${btn2}</button></div></div>`;
     chat.appendChild(el); scroll();
-    document.getElementById(id + 'y').onclick = onYes;
-    document.getElementById(id + 'n').onclick = onNo;
+    document.getElementById(`${id}y`).onclick = () => { onYes(); };
+    document.getElementById(`${id}n`).onclick = () => { onNo(); };
 }
 
 async function startFlow() {
     const t = typing(); await wait(1000); t.remove();
-    qCard('สวัสดีครับ คุณเปิดบัญชีกองทุนกับ WealthX หรือยัง?','มีอยู่แล้ว','ยังไม่มีครับ',
+    qCard('สวัสดีครับ คุณเปิดบัญชีกองทุนกับ WealthX หรือยัง?','มีอยู่แล้ว','ยังไม่มี',
         async () => {
-            addUser('มีอยู่แล้ว');
+            // กรณีมีบัญชีแล้ว
             const t2 = typing(); await wait(800); t2.remove();
             qCard('ต้องการสับเปลี่ยนกี่กองทุนครับ?','1 กองทุน','มากกว่า 1 กองทุน',
-                async () => { await finishAndSend("มีบัญชีแล้ว / 1 กองทุน"); },
-                async () => { await finishAndSend("มีบัญชีแล้ว / หลายกองทุน"); }
+                async () => {
+                    await finishAndSend("รายละเอียด: มีบัญชีแล้ว / ต้องการสับเปลี่ยน 1 กองทุน");
+                },
+                async () => {
+                    await finishAndSend("รายละเอียด: มีบัญชีแล้ว / ต้องการสับเปลี่ยนหลายกองทุน");
+                }
             );
         },
         async () => {
-            addUser('ยังไม่มีครับ');
-            await finishAndSend("ยังไม่มีบัญชี / ต้องการเปิดใหม่");
+            // กรณีไม่มีบัญชี
+            await finishAndSend("รายละเอียด: ยังไม่มีบัญชี (ต้องการเปิดบัญชีใหม่)");
         }
     );
 }
 
-// รันทันทีเมื่อโหลดหน้าเว็บ
+// รันระบบเมื่อโหลดหน้าเว็บ
 window.onload = initLiff;
 </script>
 </body>
