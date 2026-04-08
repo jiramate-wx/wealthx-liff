@@ -1,80 +1,31 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>WealthX RMF Service</title>
-<style>
-/* 1. Base Setup - ปรับให้เต็มจอ */
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-body { 
-    background: #c9e6f3; 
-    font-family: 'Noto Sans Thai', sans-serif; 
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden; 
-}
-
-/* 2. Chat Container - ขยายให้เป็น Full Screen */
-.chat-body { 
-    background: #c9e6f3; 
-    padding: 20px 14px; 
-    height: 100vh; 
-    width: 100%;
-    overflow-y: auto; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 12px; 
-    scroll-behavior: smooth; 
-    padding-bottom: 50px; /* กันโดนบังที่ด้านล่าง */
-}
-
-/* 3. สไตล์ของ Bubble (เหมือนเดิมแต่ปรับระยะให้สวยขึ้น) */
-.bw { display: flex; align-items: flex-start; gap: 8px; animation: fadeIn 0.3s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-.bw.user { flex-direction: row-reverse; }
-.av { width: 32px; height: 32px; background: #06C755; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold; flex-shrink: 0; }
-.bubble { background: white; border-radius: 18px 18px 18px 4px; padding: 12px 16px; font-size: 14px; max-width: 80%; line-height: 1.6; color: #222; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-.bubble.user { background: #06C755; color: white; border-radius: 18px 18px 4px 18px; }
-
-/* 4. Question Card & Carousel (UI หลักของ Flow) */
-.q-card { background: #1a3a6b; border-radius: 18px 18px 18px 4px; overflow: hidden; max-width: 90%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-.q-body { padding: 16px 16px 12px; color: white; font-size: 14px; font-weight: 600; line-height: 1.5; }
-.q-btns { display: flex; gap: 10px; padding: 0 16px 16px; }
-.q-btn { flex: 1; padding: 10px 8px; border-radius: 25px; font-size: 13px; font-weight: bold; cursor: pointer; border: none; transition: 0.2s; }
-.q-btn.primary { background: #06C755; color: white; }
-.q-btn.secondary { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); }
-.q-btn:disabled { opacity: 0.4; cursor: default; }
-
-.carousel-wrap { display: flex; align-items: flex-start; gap: 8px; width: 100%; }
-.carousel { overflow-x: auto; display: flex; gap: 12px; padding: 4px 0 12px; width: 100%; scroll-snap-type: x mandatory; scrollbar-width: none; }
-.carousel::-webkit-scrollbar { display: none; }
-.c-card { min-width: 260px; max-width: 260px; background: white; border-radius: 16px; overflow: hidden; flex-shrink: 0; scroll-snap-align: start; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-.c-top { height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
-.c-num { width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px; }
-.c-icon { font-size: 24px; }
-.c-body { padding: 12px 14px 14px; }
-.c-title { font-weight: bold; font-size: 13px; margin-bottom: 5px; }
-.c-text { font-size: 12px; color: #444; line-height: 1.5; }
-.c-body ol { padding-left: 18px; }
-.c-body ol li { font-size: 12px; color: #555; margin-bottom: 3px; }
-.c-note { background: #fff7f0; border-left: 4px solid #e05a1e; padding: 8px; margin-top: 10px; font-size: 11px; color: #555; }
-.c-dots { display: flex; gap: 6px; padding: 4px 0; justify-content: flex-start; }
-.dot { width: 7px; height: 7px; border-radius: 50%; background: #ccc; }
-.dot.active { background: #06C755; }
-
-.info-card { background: white; border-radius: 18px 18px 18px 4px; overflow: hidden; max-width: 90%; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-.ic-header { padding: 12px 16px 10px; font-weight: bold; font-size: 14px; border-bottom: 1px solid #f0f0f0; }
-.ic-body { padding: 12px 16px 16px; font-size: 13px; color: #333; line-height: 1.6; }
-.ic-body ul { padding-left: 18px; margin-top: 6px; }
-
-.typing { display: flex; align-items: center; gap: 5px; background: white; border-radius: 15px; padding: 12px 16px; width: fit-content; }
-.typing span { width: 8px; height: 8px; background: #bbb; border-radius: 50%; animation: bounce 1.2s infinite; }
-.typing span:nth-child(2) { animation-delay: 0.2s; }
-.typing span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-7px)} }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WealthX RMF Service</title>
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { background: #c9e6f3; font-family: 'Noto Sans Thai', sans-serif; height: 100vh; width: 100vw; overflow: hidden; }
+        .chat-body { background: #c9e6f3; padding: 20px 14px; height: 100vh; width: 100%; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; padding-bottom: 50px; }
+        .bw { display: flex; align-items: flex-start; gap: 8px; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .bw.user { flex-direction: row-reverse; }
+        .av { width: 32px; height: 32px; background: #06C755; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold; flex-shrink: 0; }
+        .bubble { background: white; border-radius: 18px 18px 18px 4px; padding: 12px 16px; font-size: 14px; max-width: 80%; line-height: 1.6; color: #222; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .bubble.user { background: #06C755; color: white; border-radius: 18px 18px 4px 18px; }
+        .q-card { background: #1a3a6b; border-radius: 18px 18px 18px 4px; overflow: hidden; max-width: 90%; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .q-body { padding: 16px 16px 12px; color: white; font-size: 14px; font-weight: 600; line-height: 1.5; }
+        .q-btns { display: flex; gap: 10px; padding: 0 16px 16px; }
+        .q-btn { flex: 1; padding: 10px 8px; border-radius: 25px; font-size: 13px; font-weight: bold; cursor: pointer; border: none; }
+        .q-btn.primary { background: #06C755; color: white; }
+        .q-btn.secondary { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); }
+        .typing { display: flex; align-items: center; gap: 5px; background: white; border-radius: 15px; padding: 12px 16px; width: fit-content; }
+        .typing span { width: 8px; height: 8px; background: #bbb; border-radius: 50%; animation: bounce 1.2s infinite; }
+        @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-7px)} }
+    </style>
 </head>
 <body>
 
@@ -82,113 +33,65 @@ body {
 
 <script>
 const chat = document.getElementById('chatBody');
+const LIFF_ID = "2009740963-bdYhkB68"; // ID ของคุณ
+
+// 2. ฟังก์ชันเริ่มระบบ LIFF
+async function initLiff() {
+    try {
+        await liff.init({ liffId: LIFF_ID });
+        if (!liff.isLoggedIn()) {
+            liff.login();
+        } else {
+            startFlow();
+        }
+    } catch (err) {
+        console.error('LIFF Init Error', err);
+    }
+}
+
 function scroll() { setTimeout(() => { chat.scrollTop = chat.scrollHeight; }, 100); }
 function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 function typing() {
-  const el = document.createElement('div');
-  el.className = 'bw';
-  el.innerHTML = `<div class="av">W</div><div class="typing"><span></span><span></span><span></span></div>`;
-  chat.appendChild(el); scroll(); return el;
-}
-
-function addUser(text) { 
-  chat.insertAdjacentHTML('beforeend', `<div class="bw user"><div class="bubble user">${text}</div></div>`); 
-  scroll(); 
+    const el = document.createElement('div');
+    el.className = 'bw';
+    el.innerHTML = `<div class="av">W</div><div class="typing"><span></span><span></span><span></span></div>`;
+    chat.appendChild(el); scroll(); return el;
 }
 
 function addW(html) { 
-  chat.insertAdjacentHTML('beforeend', `<div class="bw"><div class="av">W</div><div class="bubble">${html}</div></div>`); 
-  scroll(); 
+    chat.insertAdjacentHTML('beforeend', `<div class="bw"><div class="av">W</div><div class="bubble">${html}</div></div>`); 
+    scroll(); 
 }
 
-function addRaw(html) { 
-  chat.insertAdjacentHTML('beforeend', html); 
-  scroll(); 
+function addUser(text) { 
+    chat.insertAdjacentHTML('beforeend', `<div class="bw user"><div class="bubble user">${text}</div></div>`); 
+    scroll(); 
+}
+
+// 3. ฟังก์ชันจบและส่งข้อมูลเข้าแชทจริง
+async function finishAndSend(summary) {
+    const t = typing(); await wait(1000); t.remove();
+    addW("รับทราบครับ กำลังบันทึกข้อมูลและแจ้งแอดมินให้ครับ...");
+    await wait(1500);
+
+    try {
+        // คำสั่งยิงข้อความเข้าแชท (ต้องเปิด Scopes chat_message.write ในหน้าเว็บ LINE ก่อน)
+        await liff.sendMessages([
+            {
+                "type": "text",
+                "text": "📌 สนใจย้าย RMF\n" + summary
+            }
+        ]);
+        liff.closeWindow(); // ส่งจบปุ๊บ ปิดหน้าจอทันที
+    } catch (error) {
+        alert("กรุณาเปิดสิทธิ์ 'chat_message.write' ในหน้า LINE Developer ก่อนนะครับ");
+        console.error(error);
+    }
 }
 
 function qCard(body, btn1, btn2, onYes, onNo) {
-  const id = 'q' + Date.now();
-  const el = document.createElement('div');
-  el.className = 'bw';
-  el.innerHTML = `<div class="av">W</div><div class="q-card"><div class="q-body">${body}</div><div class="q-btns"><button class="q-btn primary" id="${id}y">${btn1}</button><button class="q-btn secondary" id="${id}n">${btn2}</button></div></div>`;
-  chat.appendChild(el); scroll();
-  document.getElementById(`${id}y`).onclick = () => { el.querySelectorAll('.q-btn').forEach(b=>b.disabled=true); onYes(); };
-  document.getElementById(`${id}n`).onclick = () => { el.querySelectorAll('.q-btn').forEach(b=>b.disabled=true); onNo(); };
-}
-
-const NOTE_STEP1 = `<div class="c-note"><strong>📌 หมายเหตุ :</strong> เนื่องจากบางบลจ.ไม่สามารถย้ายเข้ากองทุนเดิมได้ หากต้องการสับเปลี่ยนเข้ากองทุนเดิม ต้องพักที่กองทุนอื่นก่อน</div>`;
-const NOTE_STEP3_1 = `<div class="c-note"><strong>📌 หมายเหตุ :</strong> บลจ. อาจกำหนดให้ส่งเอกสารตัวจริงด้วยตนเองในบางกรณี</div>`;
-const NOTE_STEP3_2 = `<div class="c-note"><strong>📌 หมายเหตุ :</strong> สำหรับ ASP, BBLAM, KTAM, TALISAM, TISCOAM ต้องซื้อกองทุนปลายทางผ่าน WealthX ก่อนหนึ่งครั้ง</div>`;
-
-function makeCard(num, c1, c2, tc, icon, title, body, note) {
-  return `<div class="c-card"><div class="c-top" style="background:linear-gradient(135deg,${c1},${c2})"><div class="c-num">${num}</div><div class="c-icon">${icon}</div></div><div class="c-body"><p class="c-title" style="color:${tc}">${title}</p>${body}${note}</div></div>`;
-}
-
-const CARD1 = (note) => makeCard('1','#005bc4','#0a8fc7','#005bc4','📋','แจ้ง WealthX',`<p class="c-text">แจ้งรายละเอียดกองทุนต้นทางและปลายทาง</p>`,note);
-const CARD2 = makeCard('2','#0a8fc7','#00c0a0','#0a8fc7','📄','รอรับเอกสาร',`<p class="c-text">รอรับเอกสารทางอีเมลเพื่อดำเนินการสับเปลี่ยน</p>`,``);
-const CARD_OPEN_ACCOUNT = (num) => makeCard(String(num),'#1976D2','#42a5f5','#1976D2','🏦','เปิดบัญชีปลายทาง',`<p class="c-text">ซื้อกองทุนปลายทางผ่านแอปเพื่อให้ได้เลขที่บัญชี</p>`,``);
-const CARD_SUBMIT = (num, note) => makeCard(String(num),'#6a2dc0','#9b59b6','#6a2dc0','🤝','ส่งเอกสาร',`<p class="c-text">ลงนามและส่งเอกสารตามขั้นตอนที่ได้รับ</p>`,note);
-const CARD_TRACK = (num) => makeCard(String(num),'#1a9e48','#2ed573','#1a9e48','🔍','ติดตามผล',`<p class="c-text">บลจ. ใช้เวลาดำเนินการ 1 สัปดาห์ ผลจะปรากฎในพอร์ตอัตโนมัติ</p>`,``);
-
-const INFO_BOX_1 = `<div class="bw"><div class="av">W</div><div class="info-card"><div class="ic-header" style="color:#1976D2">📝 พร้อมเริ่มเลยไหมครับ?</div><div class="ic-body">แจ้งข้อมูลดังนี้ในแชทได้เลยครับ:<ul><li>ชื่อ-นามสกุล / เบอร์โทร</li><li>บลจ. ต้นทาง และ ปลายทาง</li></ul></div></div></div>`;
-
-function showCarousel(cards, infoBox) {
-  const cid = 'car' + Date.now();
-  const n = cards.length;
-  const dots = cards.map((_,i) => `<div class="dot ${i===0?'active':''}" id="${cid}d${i}"></div>`).join('');
-  const wrap = document.createElement('div');
-  wrap.className = 'carousel-wrap';
-  wrap.innerHTML = `<div class="av">W</div><div style="width:100%"><div class="carousel" id="${cid}">${cards.join('')}</div><div class="c-dots">${dots}</div></div>`;
-  chat.appendChild(wrap); scroll();
-  const car = document.getElementById(cid);
-  car.addEventListener('scroll', () => {
-    const idx = Math.round(car.scrollLeft / 272);
-    for(let i=0;i<n;i++){const d=document.getElementById(`${cid}d${i}`);if(d)d.className='dot'+(i===idx?' active':'');}
-  });
-  addRaw(infoBox);
-}
-
-async function startFlow() {
-  const t = typing(); await wait(1000); t.remove();
-  qCard('ยินดีต้อนรับครับ คุณเปิดบัญชีกองทุนกับ WealthX หรือยัง?','มีอยู่แล้ว','ยังไม่เคยเปิด',
-    async () => {
-      addUser('มีอยู่แล้ว'); await wait(600); const t2 = typing(); await wait(800); t2.remove();
-      qCard('ต้องการสับเปลี่ยนกี่กองทุน?','1 กองทุน','มากกว่า 1 กองทุน',
-        async () => {
-          addUser('1 กองทุน'); await wait(600); const t3 = typing(); await wait(800); t3.remove();
-          qCard('กองทุนปลายทางเป็น ASP, BBLAM, KTAM หรือ TISCO หรือไม่?','ใช่','ไม่ใช่',
-            async () => { 
-                addUser('ใช่'); 
-                const t4 = typing(); await wait(1000); t4.remove();
-                addW('ขั้นตอนการสับเปลี่ยนมี <b>5 ขั้นตอน</b> ดังนี้');
-                showCarousel([CARD1(NOTE_STEP1), CARD2, CARD_OPEN_ACCOUNT(3), CARD_SUBMIT(4, NOTE_STEP3_1), CARD_TRACK(5)], INFO_BOX_1);
-            },
-            async () => { 
-                addUser('ไม่ใช่'); 
-                const t4 = typing(); await wait(1000); t4.remove();
-                addW('ขั้นตอนการสับเปลี่ยนมี <b>4 ขั้นตอน</b> ดังนี้');
-                showCarousel([CARD1(NOTE_STEP1), CARD2, CARD_SUBMIT(3, NOTE_STEP3_1), CARD_TRACK(4)], INFO_BOX_1);
-            }
-          );
-        },
-        async () => { 
-            addUser('มากกว่า 1 กองทุน'); 
-            const t3 = typing(); await wait(1000); t3.remove();
-            addW('ขั้นตอนการสับเปลี่ยนมี <b>4 ขั้นตอน</b> ดังนี้');
-            showCarousel([CARD1(NOTE_STEP1), CARD2, CARD_SUBMIT(3, NOTE_STEP3_2), INFO_BOX_1]); 
-        }
-      );
-    },
-    async () => {
-      addUser('ยังไม่เคยเปิด'); await wait(700);
-      addW('รบกวนเปิดบัญชีผ่านแอป WealthX ก่อนนะครับ โดยเตรียมบัตรประชาชนและยืนยันตัวตนผ่าน NDID ครับ 😊');
-    }
-  );
-}
-
-// เริ่ม Flow อัตโนมัติเมื่อโหลดหน้าเว็บ
-window.onload = startFlow;
-</script>
-</body>
-</html>
+    const id = 'q' + Date.now();
+    const el = document.createElement('div');
+    el.className = 'bw';
+    el.innerHTML = `<div class="av">W</div><div class="q-card"><div class="q-body">${body}</div><div class="q-btns"><button class="q-btn primary" id="${id}
